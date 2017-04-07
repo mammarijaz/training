@@ -1,22 +1,24 @@
 <?php
-namespace CoreView;
+
 
 class ViewManager{
-
-	protected $path;
-
-    public function __construct($path){
-        $this->path = $path;
-    }
-
-    public function load($viewName){
-        if( file_exists($this->path.$viewName) ){
-            return file_get_contents($this->path.$viewName);
+    public static function load($controller,$viewName,$data){
+        $viewPath="../app/views/".$controller."/".$viewName.".php";
+        $layoutPath="../app/views/layouts/default.php";        
+        if( file_exists($layoutPath) ){  
+            ob_start();
+                include($viewPath);
+                $content=ob_get_contents();
+                ob_end_clean();
+            include($layoutPath);
+            $var=ob_get_contents();
+            ob_end_clean();
+            echo $var;
         }
-        throw new Exception("View does not exist: ".$this->path.$viewName);
+        else
+        {    
+          throw new Exception("View does not exist: ".$path);
+        }
     }
-
-    public function display($viewName){
-        echo $this->load($viewName);
-    }
+    
 }
