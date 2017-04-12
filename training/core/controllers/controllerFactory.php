@@ -3,8 +3,9 @@ require('baseController.php');
 
 class ControllerFactory
 {
-    public static function create($name,$params)
+    public static function create($name)
     {
-        return new BaseController($name,$params);
+    	$controller=$name."Controller";
+        return new $controller($name);
     }
 }

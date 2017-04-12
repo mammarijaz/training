@@ -1,22 +1,33 @@
 <?php
-require_once('../core/controllers/controllerFactory.php');
 require_once('../app/config.php');
-/*define('BASEPATH', __DIR__);
+require_once('../core/request.php');
+require_once('../core/controllers/controllerFactory.php');
 
-$viewPath = __DIR__.'/../views/';  //should be a $Global variable
 
 function __autoload($controller) {
-  require_once BASEPATH.'/app/'.$controllers.'/'.$name.'.php';
-} */
+    require_once('../app/controllers/'.$controller.'.php');
+}
 
+$request=new Request();
+
+$action=$request->action;
+
+$controller=ControllerFactory::create($request->controller);
+$action=$controller->$action();
+
+/* for testing db connection
+$array=array("std_name"=>"Ammar Ijaz","std_dob"=>"10/14/1991","std_address"=>"House No 129 Block G joher town");
+
+$pdo=DBSingleton::getInstance(DBSERVER,DBUSER,DBPSW,DBNAME);
+
+DbAl::insert("student",$array);
+
+*/
+
+/*
 $view="welcome";
 $name="layouts";
 $param=array("country"=>"Canada");
 $front=ControllerFactory::create($name,$param);
 $front->actionView($view);
-//var_dump(file_exists('../core/controllers/baseController.php') && is_readable('../core/controllers/baseController.php'));
-/*$view="home";
-
-$front->actionView($view);*/ 
-
-//$viewLoader = new ViewManager($viewPath);
+*/

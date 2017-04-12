@@ -5,20 +5,18 @@ require('../core/views/viewManager.php');
 
 class BaseController implements ControllerInterface
 {
-  
-    protected $params;
     protected $name;
 
     
-    public function __construct($name,$params){
+    public function __construct($name){
             $this->name=$name;
-            $this->params=$params;
+
     }
 
-    public function actionView($view)
+    public function actionView($view,$data=NULL)
     {
         
-        ViewManager::load($this->name,$view,$this->params); 
+        ViewManager::load($this->name,$view,$data); 
     }
 
     public function actionAdd()
